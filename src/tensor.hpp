@@ -3,6 +3,7 @@
 #include <fstream>
 #include <stdexcept>
 #include <cmath>
+#include <algorithm>
 
 class Tensor {
 public:
@@ -11,7 +12,7 @@ public:
     std::vector<float> data;
 
     Tensor(int rows, int cols)
-        : rows(rows), cols(cols), data(rows * cols, 0.0f)
+        : rows(rows), cols(cols), data(rows * cols + 1, 0.0f) //+1 for bias column
     {}
 
     float& at(int i, int j) {
@@ -79,4 +80,21 @@ public:
         }
         return t;
     }
+
+    void relu(){ //mutuate the tensor in place
+        for (int i = 0; i<rows; i++){
+            for (int j = 0; j<cols; j++){
+                this->at(i,j) = std::max(0.0f,this->at(i,j));
+            }
+        }
+    }
+
+    void sigmoid(){
+        for (int i = 0; i<rows; i++){
+            for (int j = 0; j<cols; j++){
+               this->at(i, j) = 1.0f / (1.0f + std::exp(-this->at(i, j))); 
+            }
+        }
+    }
+
 };
