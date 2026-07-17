@@ -83,7 +83,7 @@ public:
 
     void relu(){ //mutuate the tensor in place
         for (int i = 0; i<rows; i++){
-            for (int j = 0; j<cols; j++){
+            for (int j = 0; cols; j++){
                 this->at(i,j) = std::max(0.0f,this->at(i,j));
             }
         }
